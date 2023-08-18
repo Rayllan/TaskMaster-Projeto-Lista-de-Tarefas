@@ -14,65 +14,65 @@ class TaskController extends Controller
 
         return view('tasks.index', compact('tasks'));
     }
-    
+
     public function create()
     {
         return view('tasks.create');
     }
-    
+
     public function store(Request $request)
     {
         $user = auth()->user();
-    
+
         $task = new Task([
             'title' => $request->input('title'),
-            'description' => $request->input('description'), // Adicione essa linha para salvar a descrição
-            'status' => $request->input('status', 0), // Defina um valor padrão para o status caso não seja marcado
+            'description' => $request->input('description'),
+            'status' => $request->input('status', 0),
         ]);
-    
+
         $user->tasks()->save($task);
-    
+
         return redirect()->route('tasks.index')->with('success', 'Tarefa criada com sucesso.');
     }
-    
-    /*
-    $user = auth()->user();
-    $tasks = $user->tasks;
-    
-    return view('tasks.index', compact('tasks'));
-    */
-    /*
-    
-    
-    public function show(Task $task)
-    {
-        // Verifica se o usuário é o proprietário da task
-        $this->authorize('view', $task);
-    
-        return view('tasks.show', compact('task'));
-    }
-    
-    public function update(Request $request, Task $task)
-    {
-        // Verifica se o usuário é o proprietário da task
-        $this->authorize('update', $task);
 
-        $task->update([
-            'title' => $request->input('title'),
-            // outros campos da task
-        ]);
-
-        return redirect()->route('tasks.index')->with('success', 'Task atualizada com sucesso.');
+    public function edit($id)
+    {
+        $task = Task::where('id', $id)->first();
+        if (!empty($task)) {
+            return view('tasks.edit', ['task' => $task]);
+        } else {
+            return redirect()->route('tasks.index');
+        }
     }
 
-    public function destroy(Task $task)
-    {
-        // Verifica se o usuário é o proprietário da task
-        $this->authorize('delete', $task);
+    public function update(Request $request, $id)
+{
+    $task = Task::find($id);
 
-        $task->delete();
-
-        return redirect()->route('tasks.index')->with('success', 'Task removida com sucesso.');
+    if (!$task) {
+        return redirect()->route('tasks.index')->with('error', 'Tarefa não encontrada.');
     }
-*/
+
+    $validatedData = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+    ]);
+
+    $task->update([
+        'title' => $validatedData['title'],
+        'description' => $validatedData['description'],
+        'status' => $request->input('status') === 'concluída' ? true : false,
+    ]);
+
+    return redirect()->route('tasks.index')->with('success-att', 'Tarefa atualizada com sucesso.');
+}
+
+
+
+    public function destroy($id)
+    {
+
+        Task::where('id', $id)->delete();
+        return redirect()->route('tasks.index')->with('alert', 'Tarefa removida com sucesso.');
+    }
 }

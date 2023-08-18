@@ -22,15 +22,7 @@
                 <label for="description">Descrição</label>
                 <input type="text" class="form-control" name="description" placeholder="Digite a descrição..">
             </div>
-
-            <div class="form-group">
-                <label for="status">Status</label>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" name="status" value="1">
-                    <label class="form-check-label" for="status">Concluída</label>
-                </div>
-            </div>
-
+            <br>
             <div class="form-group">
                 <input type="submit" name="submit" class="btn btn-primary" value="Salvar">
                 <a href="{{ route('tasks.index') }}" class="btn btn-secondary">Cancelar</a>
