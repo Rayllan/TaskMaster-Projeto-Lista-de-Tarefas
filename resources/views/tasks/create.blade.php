@@ -15,12 +15,12 @@
             @csrf
             <div class="form-group">
                 <label for="title">Título</label>
-                <input type="text" class="form-control" name="title" placeholder="Digite o título..">
+                <input type="text" class="form-control" name="title" placeholder="Digite o título.." required>
             </div>
 
             <div class="form-group">
                 <label for="description">Descrição</label>
-                <input type="text" class="form-control" name="description" placeholder="Digite a descrição..">
+                <input type="text" class="form-control" name="description" placeholder="Digite a descrição.." required>
             </div>
             <br>
             <div class="form-group">

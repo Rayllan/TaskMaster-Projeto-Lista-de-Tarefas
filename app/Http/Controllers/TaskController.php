@@ -61,13 +61,12 @@ class TaskController extends Controller
     $task->update([
         'title' => $validatedData['title'],
         'description' => $validatedData['description'],
-        'status' => $request->input('status') === 'concluída' ? true : false,
+        'status' => $request->input('status') === '1' ? true : false,
     ]);
+     
 
     return redirect()->route('tasks.index')->with('success-att', 'Tarefa atualizada com sucesso.');
 }
-
-
 
     public function destroy($id)
     {

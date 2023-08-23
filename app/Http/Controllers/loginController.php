@@ -28,7 +28,7 @@ class loginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->route('tasks.index');
+            return redirect()->route('site.index');
         }
 
         return back()->withErrors([

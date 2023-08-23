@@ -53,17 +53,13 @@
                         <td>{{ $task->title }}</td>
                         <td>{{ $task->description }}</td>
                         <td>
-                            <form action="{{ route('tasks.update', ['id' => $task->id]) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <select class="form-select" name="status" onchange="this.form.submit()">
-                                    <option value="pendente" @if (!$task->status) selected @endif>Pendente
-                                    </option>
-                                    <option value="concluída" @if ($task->status) selected @endif>Concluída
-                                    </option>
-                                </select>
-                            </form>
+                            @if ($task->status)
+                                Concluída
+                            @else
+                                Pendente
+                            @endif
                         </td>
+
                         <th class="d-flex">
                             <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class=" btn btn-primary me-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
